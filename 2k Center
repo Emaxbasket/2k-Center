@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA 2K25 Player & Team Ratings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>NBA 2K25 Player & Team Ratings</h1>
+        <nav>
+            <input type="text" id="search-bar" placeholder="Search for a player or team">
+        </nav>
+    </header>
+    
+    <main>
+        <section id="ratings">
+            <h2>Top Rated Players</h2>
+            <ul id="player-list">
+                <!-- Player info will be populated here dynamically -->
+            </ul>
+        </section>
+        
+        <section id="teams">
+            <h2>Top Rated Teams</h2>
+            <ul id="team-list">
+                <!-- Team info will be populated here dynamically -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 NBA 2K25 Ratings Checker</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1d1f21;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+#search-bar {
+    width: 50%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+h1, h2 {
+    margin: 0;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#ratings, #teams {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+footer {
+    background-color: #1d1f21;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+// Example dataset (you would fetch real data from an API or database)
+const players = [
+    { name: 'LeBron James', rating: 97 },
+    { name: 'Kevin Durant', rating: 96 },
+    { name: 'Stephen Curry', rating: 96 },
+    { name: 'Giannis Antetokounmpo', rating: 96 },
+    { name: 'Jayson Tatum', rating: 95 }
+];
+
+const teams = [
+    { name: 'Los Angeles Lakers', overall: 95 },
+    { name: 'Brooklyn Nets', overall: 94 },
+    { name: 'Golden State Warriors', overall: 94 }
+];
+
+// Display top players
+const playerList = document.getElementById('player-list');
+players.forEach(player => {
+    const playerItem = document.createElement('li');
+    playerItem.textContent = `${player.name}: Rating ${player.rating}`;
+    playerList.appendChild(playerItem);
+});
+
+// Display top teams
+const teamList = document.getElementById('team-list');
+teams.forEach(team => {
+    const teamItem = document.createElement('li');
+    teamItem.textContent = `${team.name}: Overall ${team.overall}`;
+    teamList.appendChild(teamItem);
+});
+
+// Search functionality
+document.getElementById('search-bar').addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase();
+    
+    // Filter players
+    const filteredPlayers = players.filter(player => player.name.toLowerCase().includes(query));
+    playerList.innerHTML = '';
+    filteredPlayers.forEach(player => {
+        const playerItem = document.createElement('li');
+        playerItem.textContent = `${player.name}: Rating ${player.rating}`;
+        playerList.appendChild(playerItem);
+    });
+    
+    // Filter teams
+    const filteredTeams = teams.filter(team => team.name.toLowerCase().includes(query));
+    teamList.innerHTML = '';
+    filteredTeams.forEach(team => {
+        const teamItem = document.createElement('li');
+        teamItem.textContent = `${team.name}: Overall ${team.overall}`;
+        teamList.appendChild(teamItem);
+    });
+});
+fetch('https://api.nba2k.com/players') // This is a hypothetical API
+    .then(response => response.json())
+    .then(data => {
+        // Populate player and team lists with real data
+    });
